@@ -133,7 +133,7 @@ def encrypt_blowfish(message):
 
 @bot.callback_query_handler(func=lambda call: call.data == 'crypt_rsa')
 def crypt_rsa(call):
-    bot.send_message(call.message.chat.id, 'Введите публичный ключ для шифрования:')
+    bot.send_message(call.message.chat.id, 'Введите ключ для шифрования:')
     bot.register_next_step_handler(call.message, encrypt_rsa)
 
 def encrypt_rsa(message):
