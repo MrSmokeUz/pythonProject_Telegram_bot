@@ -1,0 +1,37 @@
+* {box-sizing: border-box;}
+.searchBar{
+  position: relative;
+  width: 600px;
+  margin: 0 auto;
+  background: #F9F0DA;
+  border-bottom: 1px solid #be290e;
+}
+.searchBar:hover{
+    border-bottom: 4px solid #be290e;
+    transition: 0.1s;
+}
+
+.searchBarInput, .searchBarInputButton {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.searchBarInput{
+  width: 100%;
+  height: 42px;
+  padding-left: 15px;
+}
+.searchBarInputButton {
+  height: 42px;
+  width: 42px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+.searchBarInputButton:before {
+  content: "\f178";
+  font-family: FontAwesome;
+  font-size: 20px;
+  color: #be290e;
+}
