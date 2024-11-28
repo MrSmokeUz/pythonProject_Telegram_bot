@@ -8,7 +8,16 @@ bot = telebot.TeleBot('7565080323:AAGFgMxAvQrehCJG1unhKtXLoijGet_m1iM')
 shifr = ''
 
 # Шифр Цезаря
-def caesar_cipher(text, shift):
+def caesar_cipher(text, shift, decrypt=False):
+    """
+    Функция для шифрования и дешифрования с помощью шифра Цезаря.
+    :param text: Исходный текст
+    :param shift: Сдвиг для шифрования
+    :param decrypt: True, если нужно расшифровать
+    :return: Зашифрованный/расшифрованный текст
+    """
+    if decrypt:
+        shift = -shift  # Для дешифрования сдвиг в обратную сторону
     encrypted = ''
     for char in text:
         if char.isalpha():
@@ -19,90 +28,26 @@ def caesar_cipher(text, shift):
     return encrypted
 
 # Упрощенный AES
-# AES (Advanced Encryption Standard) — это симметричный блочный шифр, который шифрует данные блоками по 128 бит, используя ключ длиной 128, 192 или 256 бит.
-#
-# Процесс шифрования:
-#
-#     SubBytes: Заменяет каждый байт по таблице замен (S-Box).
-#     ShiftRows: Сдвигает строки блока для перемешивания данных.
-#     MixColumns: Перемешивает байты в столбцах блока.
-#     AddRoundKey: Добавляет ключ раунда с помощью XOR.
-#
-#
-#
-# Декодирование — обратный процесс с использованием того же ключа.
-# AES безопасен благодаря множественным преобразованиям и сложности подбора ключа.
-
-# Шаги:
-#
-#     Итерация по символам текста:
-#     Цикл проходит по каждому символу строки text.
-#
-#     Применение XOR:
-#         ord(text[i]): Преобразует символ текста в его числовое представление (код символа в Unicode).
-#         ord(key[i % len(key)]): Берёт символ из ключа (с использованием остатка % для циклического использования ключа, если он короче текста) и преобразует его в числовое представление.
-#         ^: Выполняет побитовое XOR между числовыми представлениями символа текста и символа ключа.
-#
-#     Преобразование обратно в символ:
-#         chr(...): Преобразует результат XOR обратно в символ.
-#
-#     Добавление символа в зашифрованный текст:
-#     Каждый результат преобразования добавляется к строке encrypted.
-
-# text = "Hello"
-# key = "key"
-#
-# # Пошаговое выполнение:
-# # i = 0: text[0] = 'H', key[0 % 3] = 'k' → ord('H') ^ ord('k') = 72 ^ 107 = 35 → chr(35) = '#'
-# # i = 1: text[1] = 'e', key[1 % 3] = 'e' → ord('e') ^ ord('e') = 101 ^ 101 = 0 → chr(0) = '\x00'
-# # i = 2: text[2] = 'l', key[2 % 3] = 'y' → ord('l') ^ ord('y') = 108 ^ 121 = 21 → chr(21) = '\x15'
-# # ...
-#
-# # Результат:
-# encrypted = "#\x00\x15..."
-
-
 def simple_aes(text, key):
+    """
+    XOR-шифрование, имитирующее упрощенный AES.
+    :param text: Исходный текст
+    :param key: Ключ для шифрования/дешифрования
+    :return: Зашифрованный текст
+    """
     encrypted = ''
     for i in range(len(text)):
-        encrypted += chr(ord(text[i]) ^ ord(key[i % len(key)]))  # XOR с ключом
+        encrypted += chr(ord(text[i]) ^ ord(key[i % len(key)]))
     return encrypted
-
-# a) Разделение на блоки:
-#
-#     range(0, len(text), 8): Цикл обрабатывает текст по блокам длиной 8 символов.
-#     text[i:i+8]: Извлекается текущий блок текста.
-#     .ljust(8, '\0'): Если блок короче 8 символов, он дополняется символом '\0' (нулевой байт).
-#
-# Пример:
-#
-#     Текст: "HelloWorld".
-#     Первый блок: "HelloWor".
-#     Второй блок: "ld\0\0\0" (добавлены три нулевых байта).
-
-# Каждый символ в блоке шифруется с помощью XOR:
-#
-#     Циклический выбор ключа: key[j % len(key)] позволяет использовать ключ повторно, если он короче блока.
-#     Преобразование символов:
-#         ord(block[j]): Преобразует символ блока в числовой код (Unicode).
-#         ord(key[j % len(key)]): Преобразует символ ключа в числовой код.
-#         ^: Выполняет побитовое XOR между кодами символа блока и ключа.
-#         chr(...): Преобразует результат обратно в символ.
-#
-# Результат: Зашифрованный блок длиной 8 символов
-# text = "HelloWorld"
-# key = "key"
-#
-# # Пошагово:
-# # Блок 1: "HelloWor"
-# # Шифрование: Каждый символ XOR'ится с символами ключа "key".
-# # Блок 2: "ld\0\0\0" (дополнено '\0').
-#
-# encrypted = simple_blowfish(text, key)
-
 
 # Упрощенный Blowfish
 def simple_blowfish(text, key):
+    """
+    Шифрование блоками длиной 8 символов с использованием XOR.
+    :param text: Исходный текст
+    :param key: Ключ
+    :return: Зашифрованный текст
+    """
     encrypted = ''
     for i in range(0, len(text), 8):
         block = text[i:i+8].ljust(8, '\0')
@@ -110,60 +55,40 @@ def simple_blowfish(text, key):
         encrypted += encrypted_block
     return encrypted
 
-# Шаги:
-#
-#     Обработка каждого символа текста: Цикл проходит по каждому символу строки text.
-#
-#     Конвертация символа в число:
-#         ord(char): Преобразует символ в числовое представление (код символа в Unicode).
-#
-#     Шифрование с использованием RSA:
-#         pow(ord(char), e, n): Выполняет операцию (ord(char)e)mod  n(ord(char)e)modn.
-#         Это основное шифрование в алгоритме RSA.
-#             ord(char)ord(char): Исходное значение символа.
-#             ee: Открытая экспонента (часть ключа).
-#             nn: Модуль (часть ключа).
-#
-#     Преобразование обратно в символ:
-#         chr(...): Преобразует результат шифрования обратно в символ.
-#
-#     Добавление зашифрованного символа в результат:
-#         Каждый зашифрованный символ добавляется в строку encrypted.
-# text = "Hi"
-# e = 3
-# n = 33
-# Пошаговая обработка:
-#
-#     Первый символ: 'H'
-#         ord('H') = 72
-#         Шифрование: (723)mod  33=18(723)mod33=18
-#         chr(18) = '\x12' (непечатный символ).
-#
-#     Второй символ: 'i'
-#         ord('i') = 105
-#         Шифрование: (1053)mod  33=15(1053)mod33=15
-#         chr(15) = '\x0f'.
-#
-# Результат: encrypted = '\x12\x0f'.
 # Упрощенный RSA
 def rsa_encrypt(text, e, n):
+    """
+    Упрощенное RSA-шифрование.
+    :param text: Исходный текст
+    :param e: Публичная экспонента
+    :param n: Модуль
+    :return: Зашифрованный текст
+    """
     encrypted = ''
     for char in text:
-        encrypted += chr(pow(ord(char), e, n))  # (char ^ e) mod n
+        encrypted += chr(pow(ord(char), e, n))
     return encrypted
 
 def rsa_decrypt(encrypted_text, d, n):
+    """
+    Упрощенное RSA-дешифрование.
+    :param encrypted_text: Зашифрованный текст
+    :param d: Приватная экспонента
+    :param n: Модуль
+    :return: Расшифрованный текст
+    """
     decrypted = ''
     for char in encrypted_text:
-        decrypted += chr(pow(ord(char), d, n))  # (char ^ d) mod n
+        decrypted += chr(pow(ord(char), d, n))
     return decrypted
-# Начало работы бота , бот отправляет пользавателю сообщение с предложением ввести текст который он хочет зашифровать или дешифровать
+
+# Стартовая команда
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.from_user.id, 'Введи текст, который ты хочешь зашифровать или расшифровать.')
-    # Переходит на следующий этап
     bot.register_next_step_handler(message, ask)
-# Отправляет сообщению  с выбором кнопки операции
+
+# Выбор действия (зашифровать/расшифровать)
 def ask(message):
     global shifr
     shifr = message.text  # Сохраняем текст пользователя
@@ -171,93 +96,84 @@ def ask(message):
     key_yes = types.InlineKeyboardButton(text='Зашифровать', callback_data='crypt')
     key_no = types.InlineKeyboardButton(text='Расшифровать', callback_data='decrypt')
     keyboard.add(key_yes, key_no)
+    bot.send_message(message.from_user.id, 'Что ты хочешь сделать?', reply_markup=keyboard)
 
-    question = 'Что ты хочешь сделать?'
-    bot.send_message(message.from_user.id, text=question, reply_markup=keyboard)
-
+# Обработка кнопки "Зашифровать"
 @bot.callback_query_handler(func=lambda call: call.data == "crypt")
 def crypt_handler(call):
-    ask_crypt(call.message.chat.id)  # Переходим к выбору шифра
+    ask_crypt(call.message.chat.id)
 
+# Обработка кнопки "Расшифровать"
 @bot.callback_query_handler(func=lambda call: call.data == "decrypt")
 def decrypt_handler(call):
-    ask_decrypt(call.message.chat.id)  # Переходим к выбору дешифрования
+    ask_decrypt(call.message.chat.id)
 
-# Выводит выбор из различных шифрований
+# Выбор метода шифрования
 def ask_crypt(chat_id):
     keyboard = types.InlineKeyboardMarkup()
-    key_one = types.InlineKeyboardButton(text='Шифр Цезаря', callback_data='crypt_caesar')
-    key_two = types.InlineKeyboardButton(text='Шифр AES', callback_data='crypt_aes')
-    key_three = types.InlineKeyboardButton(text='Шифр Blowfish', callback_data='crypt_blowfish')
-    key_four = types.InlineKeyboardButton(text='Шифр RSA', callback_data='crypt_rsa')
-    keyboard.add(key_one, key_two, key_three, key_four)
+    key_caesar = types.InlineKeyboardButton(text='Шифр Цезаря', callback_data='crypt_caesar')
+    key_aes = types.InlineKeyboardButton(text='Шифр AES', callback_data='crypt_aes')
+    key_blowfish = types.InlineKeyboardButton(text='Шифр Blowfish', callback_data='crypt_blowfish')
+    key_rsa = types.InlineKeyboardButton(text='Шифр RSA', callback_data='crypt_rsa')
+    keyboard.add(key_caesar, key_aes, key_blowfish, key_rsa)
+    bot.send_message(chat_id, 'Выбери метод шифрования:', reply_markup=keyboard)
 
-    question = 'Выбери метод шифрования:'
-    bot.send_message(chat_id, text=question, reply_markup=keyboard)
-
-# Выводит выбор из различных шифрований
+# Выбор метода дешифрования
 def ask_decrypt(chat_id):
     keyboard = types.InlineKeyboardMarkup()
-    key_one = types.InlineKeyboardButton(text='Шифр Цезаря', callback_data='decrypt_caesar')
-    key_two = types.InlineKeyboardButton(text   ='Шифр AES', callback_data='decrypt_aes')
-    key_three = types.InlineKeyboardButton(text='Шифр Blowfish', callback_data='decrypt_blowfish')
-    key_four = types.InlineKeyboardButton(text='Шифр RSA', callback_data='decrypt_rsa')
-    keyboard.add(key_one, key_two, key_three, key_four)
+    key_caesar = types.InlineKeyboardButton(text='Шифр Цезаря', callback_data='decrypt_caesar')
+    key_aes = types.InlineKeyboardButton(text='Шифр AES', callback_data='decrypt_aes')
+    key_blowfish = types.InlineKeyboardButton(text='Шифр Blowfish', callback_data='decrypt_blowfish')
+    key_rsa = types.InlineKeyboardButton(text='Шифр RSA', callback_data='decrypt_rsa')
+    keyboard.add(key_caesar, key_aes, key_blowfish, key_rsa)
+    bot.send_message(chat_id, 'Выбери метод дешифрования:', reply_markup=keyboard)
 
-    question = 'Выбери метод дешифрования:'
-    bot.send_message(chat_id, text=question, reply_markup=keyboard)
-
-# Обработчики для каждого шифра
-
-@bot.callback_query_handler(func=lambda call: call.data == 'crypt_caesar')
-def crypt_caesar(call):
-    bot.send_message(call.message.chat.id, 'Введите сдвиг для шифра Цезаря:')
-    bot.register_next_step_handler(call.message, encrypt_caesar)
-
-def encrypt_caesar(message):
+# Шифрование/дешифрование для каждого метода (Цезарь, AES, Blowfish, RSA)
+@bot.callback_query_handler(func=lambda call: call.data.startswith('crypt_') or call.data.startswith('decrypt_'))
+def process_crypt_decrypt(call):
     global shifr
-    shift = int(message.text)  # Получаем сдвиг
-    encrypted = caesar_cipher(shifr, shift)
-    bot.send_message(message.from_user.id, f'Зашифрованный текст: {encrypted}')
-    start(message)  # Запрашиваем новый текст для шифрования/дешифрования
+    operation, method = call.data.split('_')
+    if method == 'caesar':
+        bot.send_message(call.message.chat.id, 'Введите сдвиг:')
+        bot.register_next_step_handler(call.message, lambda msg: process_caesar(msg, operation == 'crypt'))
+    elif method == 'aes' or method == 'blowfish':
+        bot.send_message(call.message.chat.id, 'Введите ключ:')
+        bot.register_next_step_handler(call.message, lambda msg: process_aes_blowfish(msg, method, operation == 'crypt'))
+    elif method == 'rsa':
+        bot.send_message(call.message.chat.id, 'Введите ключи (e,n) для шифрования или (d,n) для дешифрования через пробел:')
+        bot.register_next_step_handler(call.message, lambda msg: process_rsa(msg, operation == 'crypt'))
 
-@bot.callback_query_handler(func=lambda call: call.data == 'crypt_aes')
-def crypt_aes(call):
-    bot.send_message(call.message.chat.id, 'Введите ключ для шифрования:')
-    bot.register_next_step_handler(call.message, encrypt_aes)
-
-def encrypt_aes(message):
+def process_caesar(message, encrypt):
     global shifr
-    key = message.text
-    encrypted = simple_aes(shifr, key)
-    bot.send_message(message.from_user.id, f'Зашифрованный текст: {encrypted}')
-    start(message)  # Запрашиваем новый текст для шифрования/дешифрования
+    try:
+        shift = int(message.text)
+        result = caesar_cipher(shifr, shift, not encrypt)
+        bot.send_message(message.from_user.id, f'Результат: {result}')
+    except ValueError:
+        bot.send_message(message.from_user.id, 'Ошибка: введите число!')
+    start(message)
 
-@bot.callback_query_handler(func=lambda call: call.data == 'crypt_blowfish')
-def crypt_blowfish(call):
-    bot.send_message(call.message.chat.id, 'Введите ключ для шифрования:')
-    bot.register_next_step_handler(call.message, encrypt_blowfish)
-
-def encrypt_blowfish(message):
+def process_aes_blowfish(message, method, encrypt):
     global shifr
     key = message.text
-    encrypted = simple_blowfish(shifr, key)
-    bot.send_message(message.from_user.id, f'Зашифрованный текст: {encrypted}')
-    start(message)  # Запрашиваем новый текст для шифрования/дешифрования
+    cipher_func = simple_aes if method == 'aes' else simple_blowfish
+    result = cipher_func(shifr, key)
+    bot.send_message(message.from_user.id, f'Результат: {result}')
+    start(message)
 
-@bot.callback_query_handler(func=lambda call: call.data == 'crypt_rsa')
-def crypt_rsa(call):
-    bot.send_message(call.message.chat.id, 'Введите ключ для шифрования:')
-    bot.register_next_step_handler(call.message, encrypt_rsa)
-
-def encrypt_rsa(message):
+def process_rsa(message, encrypt):
     global shifr
-    public_key = message.text
-    e = 65537  # Простой пример публичного ключа
-    n = 3233  # Простое произведение для RSA
-    encrypted = rsa_encrypt(shifr, e, n)
-    bot.send_message(message.from_user.id, f'Зашифрованный текст: {encrypted}')
-    start(message)  # Запрашиваем новый текст для шифрования/дешифрования
+    try:
+        keys = message.text.split(',')
+        key1, n = map(int, keys)
+        if encrypt:
+            result = rsa_encrypt(shifr, key1, n)
+        else:
+            result = rsa_decrypt(shifr, key1, n)
+        bot.send_message(message.from_user.id, f'Результат: {result}')
+    except ValueError:
+        bot.send_message(message.from_user.id, 'Ошибка: введите ключи в формате "число,число"!')
+    start(message)
 
 # Запуск бота
 bot.polling(none_stop=True)
