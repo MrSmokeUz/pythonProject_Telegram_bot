@@ -1,40 +1,40 @@
-body{
-  font-family: sans-serif;
-  margin: 0;
-  background-color: blueviolet;
+/* Сброс основных стилей */
+* {
+  box-sizing: border-box;
 }
-.section{
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+}
+
+/* Фиксированная строка поиска */
+header {
+  position: fixed; /* Фиксируем строку поиска */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #f4f4f4;
+  z-index: 1000; /* Чтобы оставалась над другими элементами */
   display: flex;
   justify-content: center;
-  align-items: start;
+  padding: 10px 0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Небольшая тень */
 }
-.menu-btn{
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background-color: #FFF;
-  border-radius: 50%;
-  position: relative;
-}
-span{
-  position: relative;
-  
-  width: 20px;
-  height: 2px;
-  background-color: #222;
-}
-* {box-sizing: border-box;}
-.searchBar{
+
+/* Стили для строки поиска */
+.searchBar {
   display: flex;
   position: relative;
   width: 600px;
-  margin: 0 auto;
   background: #F9F0DA;
   border-bottom: 1px solid #be290e;
 }
-.searchBar:hover{
-    border-bottom: 4px solid #be290e;
-    transition: 0.1s;
+
+.searchBar:hover {
+  border-bottom: 4px solid #be290e;
+  transition: 0.1s;
 }
 
 .searchBarInput, .searchBarInputButton {
@@ -42,22 +42,105 @@ span{
   outline: none;
   background: transparent;
 }
-.searchBarInput{
+
+.searchBarInput {
   width: 100%;
   height: 42px;
   padding-left: 15px;
 }
+
 .searchBarInputButton {
   height: 42px;
   width: 42px;
   position: absolute;
-  top: 0;
   right: 0;
   cursor: pointer;
 }
+
 .searchBarInputButton:before {
   content: "\f178";
   font-family: FontAwesome;
   font-size: 20px;
   color: #be290e;
+}
+
+.profile{
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  display: flex;
+}
+
+/* Основное содержимое */
+.main {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 80px 0 20px; 
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 15px;
+  width: 400px;
+  height: 525px;
+  background: #F9F0DA;
+  border-bottom: 1px solid #be290e;
+  transition: border-bottom 0.1s;
+  border-radius: 2px;
+}
+
+.card:hover {
+  border-bottom: 4px solid #be290e;
+}
+
+.imageCard img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover; /* Чтобы изображение занимало весь блок и выглядело пропорционально */
+  border-bottom: 1px solid #be290e;
+}
+
+.content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.content h3 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #be290e;
+}
+
+.content p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Стили кнопки */
+.button {
+  box-shadow: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #be290e;
+  background-color: #F9F0DA;
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 8px 13px;
+  color: #be290e;
+  font-size: 14px;
+  margin-top: 5px;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.button:active {
+  background-color: #be290e;
+  color: #fff;
 }
