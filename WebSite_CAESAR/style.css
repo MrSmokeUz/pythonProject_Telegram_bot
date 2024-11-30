@@ -92,7 +92,6 @@ header {
   transition: border-bottom 0.1s;
   border-radius: 2px;
 }
-
 .card:hover {
   border-bottom: 4px solid #be290e;
 }
@@ -129,7 +128,7 @@ header {
   box-shadow: none;
   outline: none;
   border: none;
-  border-bottom: 1px solid #be290e;
+  border: 1px solid #be290e;
   background-color: #F9F0DA;
   border-radius: 2px;
   cursor: pointer;
