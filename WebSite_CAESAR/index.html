@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAESAR</title>
-    <link rel="icon" href="WebSite_CAESAR/images/logo.webp" type="image/webp">
+    <link rel="icon" href="images/logo.webp" type="image/webp">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
+        <div class="profile">
+            <img src="images/free-icon-home-553416.png" alt="Увы, не работает" class="profile">
+        </div>
         <form class="searchBar">
             <input type="text" placeholder="Искать здесь..." class="searchBarInput">
             <button type="submit" class="searchBarInputButton"></button>
@@ -25,9 +28,11 @@
             <div class="content">
                 <h3>Шифр Цезаря</h3>
                 <p>Описание шифра Цезаря.</p>
-                <button class="button" onclick="fullPage()">
-                    Полное описание
-                </button>
+                <form action="caesar.html">
+                    <button class="button" type="submit">
+                        Полное описание
+                    </button>
+                    </form>
             </div>
         </div>
         <div class="card">
@@ -37,9 +42,12 @@
             <div class="content">
                 <h3>Шифр AES</h3>
                 <p>Описание шифра AES.</p>
-                <button class="button" onclick="fullPage()">
+                <form action="caesar.html">
+                <button class="button" type="submit">
                     Полное описание
                 </button>
+                </form>
+               
             </div>
         </div>
         <div class="card">
@@ -49,9 +57,11 @@
             <div class="content">
                 <h3>Шифр RSA</h3>
                 <p>Описание шифра RSA.</p>
-                <button class="button" onclick="fullPage()">
+                <form action="caesar.html">
+                     <button class="button" type="submit">
                     Полное описание
                 </button>
+                </form>
             </div>
         </div>
         <div class="card">
@@ -61,9 +71,12 @@
             <div class="content">
                 <h3>Шифр BLOWFISH</h3>
                 <p>Описание шифра BLOWFISH</p>
-                <button class="button" onclick="fullPage()">
+                <form action="caesar.html">
+                <button class="button" type="submit">
                     Полное описание
                 </button>
+                </form>
+               
             </div>
         </div>
     <script src="script.js"></script>

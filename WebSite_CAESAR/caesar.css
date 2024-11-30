@@ -9,6 +9,13 @@ body {
   background: #f4f4f4;
 }
 
+.montserrat-uniquifier {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
 /* Фиксированная строка поиска */
 header {
   position: fixed; /* Фиксируем строку поиска */
@@ -71,77 +78,44 @@ header {
   display: flex;
 
 }
+  .main{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    margin-top: 50px;
 
-/* Основное содержимое */
-.main {
-  width: 100%;
+  }
+
+  .sectionOne{
+    width: 98.5%;
+    height: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+    flex-wrap: wrap;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+ .block{
+  margin: 20px;
+  padding: 10px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 80px 0 20px; 
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin: 15px;
-  width: 400px;
-  height: 525px;
-  background: #F9F0DA;
-  border-bottom: 1px solid #be290e;
-  transition: border-bottom 0.1s;
-  border-radius: 2px;
-}
-.card:hover {
-  border-bottom: 4px solid #be290e;
-}
-
-.imageCard img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover; /* Чтобы изображение занимало весь блок и выглядело пропорционально */
-  border-bottom: 1px solid #be290e;
-}
-
-.content {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-
-.content h3 {
-  margin: 0 0 10px;
-  font-size: 20px;
-  color: #be290e;
-}
-
-.content p {
-  margin: 0;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Стили кнопки */
-.button {
-  box-shadow: none;
-  outline: none;
-  border: none;
-  font-style: none;
-  text-decoration: none;
-  border: 1px solid #be290e;
-  background-color: #F9F0DA;
-  border-radius: 2px;
-  cursor: pointer;
-  padding: 8px 13px;
-  color: #be290e;
-  font-size: 14px;
-  margin-top: 5px;
-  transition: background-color 0.1s ease-in-out;
-}
-.button:active {
-  background-color: #be290e;
-  color: #fff;
-}
+  flex: 0 0 32%;  /* Каждый элемент будет занимать 48% ширины контейнера */
+  
+ }
+  #descpriptionImage{
+    display: flex;
+    width: 400px;
+    height: 400px;
+    margin: 20px;
+  }
+  #descpription{
+    display: flex;
+    color: black;
+    padding-top: 50px;
+    font-size: 30px;
+    text-align: center;
+    font-family:  "Montserrat", sans-serif ;
+  }
