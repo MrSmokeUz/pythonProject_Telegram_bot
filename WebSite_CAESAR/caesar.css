@@ -29,7 +29,12 @@ header {
   padding: 10px 0;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Небольшая тень */
 }
-
+.homeButton{
+  text-decoration: none;
+  border: none;
+  background-color: #f4f4f4;
+  cursor: pointer;
+}
 /* Стили для строки поиска */
 .searchBar {
   display: flex;
@@ -83,32 +88,45 @@ header {
     height: 50%;
     display: flex;
     margin-top: 50px;
-
+    flex-wrap: wrap;
   }
 
   .sectionOne{
     width: 98.5%;
     height: 50%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     margin: 15px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
     flex-wrap: wrap;
     transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    opacity: 1;
+    transition: opacity 0.6s ease-in, transform 0.6s ease-in;
   }
-  
+  .sectionTwo{
+    width: 98.5%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+    flex-wrap: wrap;
+    transform: translateY(20px);
+    opacity: 1;
+    transition: opacity 0.6s ease-in, transform 0.6s ease-in;
+  }
+
  .block{
   margin: 20px;
   padding: 10px;
   display: flex;
-  flex: 0 0 32%;  /* Каждый элемент будет занимать 48% ширины контейнера */
+  /* flex: 0 0 32%;  Каждый элемент будет занимать 48% ширины контейнера */
   
  }
   #descpriptionImage{
     display: flex;
-    width: 400px;
-    height: 400px;
+    width: 25rem;
+    height: 25rem;
     margin: 20px;
   }
   #descpription{
