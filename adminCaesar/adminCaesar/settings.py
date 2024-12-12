@@ -126,7 +126,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Добавьте эту строку
+        'DIRS': [BASE_DIR / 'templates/main'],  # Добавьте эту строку
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

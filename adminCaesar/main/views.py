@@ -7,5 +7,10 @@ def index(request):
     # return  HttpResponse("<h1>Test</h1>")
     return render(request, 'index.html')
 
+def caesar(request):
+    return render(request,'caesar.html')
+
+
+
 # def about(request):
 #     return render(request, 'caesar.html')
