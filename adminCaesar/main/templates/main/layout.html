@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>  {% block title %}
+    {% endblock %}</title>
+    {% block links %}
+    <link rel="icon" href="static/images/logo.webp" type="image/webp">
+    {% endblock %}
+
+
+
 </head>
 <body>
+   <header>
+        <div class="profile">
+            <img src="static/images/free-icon-home-553416.png" alt="Увы, не работает" class="profile">
+        </div>
+        <form class="searchBar">
+            <input type="text" placeholder="Искать здесь..." class="searchBarInput">
+            <button type="submit" class="searchBarInputButton"></button>
+        </form>
+        <div class="profile">
+            <img src="static/images/free-icon-profile-5987424.png" alt="Увы, не работает" class="profile">
+        </div>
+    </header>
+    {% block content %}
+    {% endblock %}
 
+<script src="script.js"></script>
 </body>
 </html>

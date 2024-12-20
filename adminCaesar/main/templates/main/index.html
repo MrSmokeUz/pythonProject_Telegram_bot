@@ -1,27 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAESAR</title>
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{%block title%}
+CAESAR
+{% endblock %}
+
+{% block links %}
     <link rel="icon" href="static/images/logo.webp" type="image/webp">
     <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
-    <header>
-        <div class="profile">
-            <img src="static/images/free-icon-home-553416.png" alt="Увы, не работает" class="profile">
-        </div>
-        <form class="searchBar">
-            <input type="text" placeholder="Искать здесь..." class="searchBarInput">
-            <button type="submit" class="searchBarInputButton"></button>
-        </form>
-        <div class="profile">
-            <img src="static/images/free-icon-profile-5987424.png" alt="Увы, не работает" class="profile">
-        </div>
-    </header>
-    <div class="main">
+{% endblock %}
+
+     {% block content %}
+     <div class="main">
         <div class="card">
             <div class="imageCard">
                 <img src="static/images/cryptCaesar.jpg" alt="Картинка карточки">
@@ -80,6 +71,5 @@
                
             </div>
         </div>
-    <script src="script.js"></script>
-</body>
-</html>
+ {% endblock %}
+
