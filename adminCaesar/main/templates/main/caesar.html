@@ -1,37 +1,20 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/logo.webp" type="image/webp">
+{% extends 'main/layout.html' %}
 
-    <title>CAESAR</title>
+{% load static %}
+
+{% block title %}
+CAESAR
+{% endblock %}
+
+{% block links %}
+    <link rel="icon" href="static/images/logo.webp" type="image/webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/home/demorgan/PycharmProjects/pythonProject_Telegram_bot/adminCaesar/static/css/caesar.css">
-</head>
-<body>
-    <header>
-      <form action="index.html">
-        <button type="submit" class="homeButton">
-           <div class="profile">
-            <img src="static/images/free-icon-home-553416.png" alt="Увы, не работает" class="profile">
-          </div>
-        </button>
-        
-      </form>
-   
-    <form class="searchBar">
-        <input type="text" placeholder="Искать здесь..." class="searchBarInput">
-        <button type="submit" class="searchBarInputButton"></button>
-    </form>
-    <div class="profile">
-        <img src="images/free-icon-profile-5987424.png" alt="Увы, не работает" class="profile">
-    </div>
-    </header>
+    <link rel="stylesheet" href="{% static 'css/caesar.css' %}">
+{% endblock %}
+
+{% block content %}
     <div class="main">
         <div class="sectionOne">
           <div class="block">
@@ -76,9 +59,4 @@
           </textarea>
         </div>
     </div>
-
-    <script src="script.js">
-
-    </script>
-</body>
-</html>
+{% endblock %}
