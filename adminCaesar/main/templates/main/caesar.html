@@ -46,17 +46,32 @@ CAESAR
         </div>
         <div class="sectionTwo">
 
+<div class="container">
+        <!-- Заголовок интерфейса -->
+        <h1>Encryption Tool</h1>
 
-          
-          <button class="" onclick="">
-            
-          </button>
-          <textarea name="" id="">
-            
-          </textarea>
-          <textarea name="" id="">
+        <!-- Выпадающее меню для выбора метода шифрования -->
+        <select id="encryption-method" onchange="changeMethod()">
+            <option value="caesar">Caesar Cipher</option>
+            <option value="rsa">RSA</option>
+            <option value="aes">AES</option>
+            <option value="blowfish">Blowfish</option>
+        </select>
 
-          </textarea>
-        </div>
+        <!-- Поле для ввода текста -->
+        <textarea id="input-text" placeholder="Enter text here..."></textarea>
+
+        <!-- Поле для ввода ключа (сдвига) -->
+        <input type="number" id="key" placeholder="Enter shift key (e.g., 3)" />
+
+        <!-- Кнопка для переключения между шифрованием и дешифрованием -->
+        <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+
+        <!-- Основная кнопка для выполнения текущего действия -->
+        <button id="action-btn" onclick="performAction()">Encrypt</button>
+
+        <!-- Поле для вывода результата -->
+        <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
     </div>
+
 {% endblock %}
