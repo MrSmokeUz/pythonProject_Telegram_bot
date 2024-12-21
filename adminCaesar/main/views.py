@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 def index(request):
     # return  HttpResponse("<h1>Test</h1>")
-    return render(request, 'main/index.html')
+    return render(request, 'main/index.html',{'title':'Main page'})
 
 def caesar(request):
     return render(request,'main/caesar.html')
