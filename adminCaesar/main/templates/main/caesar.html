@@ -25,7 +25,7 @@ CAESAR
             </div>
             <div class="block">
               <h1 class="">
-                Плюсы
+                    Плюсы
               </h1>
                <ol>
                 <li>Простота реализации</li>
@@ -45,12 +45,8 @@ CAESAR
             </div>
         </div>
         <div class="sectionTwo">
-
-<div class="container">
-        <!-- Заголовок интерфейса -->
-        <h1>Encryption Tool</h1>
-
-        <!-- Выпадающее меню для выбора метода шифрования -->
+   <div class="container">
+        <!-- Выбор метода шифрования -->
         <select id="encryption-method" onchange="changeMethod()">
             <option value="caesar">Caesar Cipher</option>
             <option value="rsa">RSA</option>
@@ -58,20 +54,30 @@ CAESAR
             <option value="blowfish">Blowfish</option>
         </select>
 
-        <!-- Поле для ввода текста -->
-        <textarea id="input-text" placeholder="Enter text here..."></textarea>
+        <!-- Блок для ввода и вывода текста -->
+        <div class="translation-box">
+            <div>
+                <div class="description" id="input-description">Encrypting</div>
+                <textarea id="input-text" placeholder="Enter text here..."></textarea>
+            </div>
 
-        <!-- Поле для ввода ключа (сдвига) -->
-        <input type="number" id="key" placeholder="Enter shift key (e.g., 3)" />
+            <div>
+                <div class="description" id="output-description">Decrypting</div>
+            <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
 
-        <!-- Кнопка для переключения между шифрованием и дешифрованием -->
-        <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+            </div>
+               </div>
 
-        <!-- Основная кнопка для выполнения текущего действия -->
-        <button id="action-btn" onclick="performAction()">Encrypt</button>
+        <!-- Панель управления -->
+        <div class="controls">
+            <!-- Поле для ввода ключа -->
+            <input type="number" id="key" placeholder="Enter shift key (e.g., 3)" />
 
-        <!-- Поле для вывода результата -->
-        <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
+            <!-- Кнопки для действий -->
+            <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+            <button id="action-btn" onclick="performAction()">Encrypt</button>
+        </div>
     </div>
+
 
 {% endblock %}
