@@ -10,6 +10,17 @@ def index(request):
 def caesar(request):
     return render(request,'main/caesar.html')
 
+def rsa(request):
+    return render(request,'main/rsa.html')
+
+def aes(request):
+    return render(request,'main/aes.html')
+
+def blowfish(request):
+    return render(request,'main/blowfish.html')
+
+
+
 
 
 # def about(request):

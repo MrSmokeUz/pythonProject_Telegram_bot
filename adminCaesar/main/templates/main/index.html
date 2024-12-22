@@ -35,7 +35,7 @@ CAESAR
             <div class="content">
                 <h3>Шифр AES</h3>
                 <p>Описание шифра AES.</p>
-                <form action="caesar.html">
+                <form action="{% url 'main/aes' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -50,7 +50,7 @@ CAESAR
             <div class="content">
                 <h3>Шифр RSA</h3>
                 <p>Описание шифра RSA.</p>
-                <form action="caesar.html">
+                <form action="{% url 'main/rsa' %}">
                      <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -64,7 +64,7 @@ CAESAR
             <div class="content">
                 <h3>Шифр BLOWFISH</h3>
                 <p>Описание шифра BLOWFISH</p>
-                <form action="caesar.html">
+                <form action="{% url 'main/blowfish' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
