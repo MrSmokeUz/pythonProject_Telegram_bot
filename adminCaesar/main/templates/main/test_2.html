@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шифрование на JavaScript</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+        }
+        .output {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Примеры шифрования</h1>
+
+    <!-- AES Encryption -->
+    <h2>AES (CryptoJS)</h2>
+    <textarea id="aes-input" placeholder="Введите текст для шифрования"></textarea>
+    <input type="text" id="aes-key" placeholder="Введите ключ (16 символов)" />
+    <button onclick="encryptAES()">Зашифровать</button>
+    <button onclick="decryptAES()">Расшифровать</button>
+    <div class="output" id="aes-output"></div>
+
+    <!-- SHA Hashing -->
+    <h2>SHA-256 (CryptoJS)</h2>
+    <textarea id="sha-input" placeholder="Введите текст для хэширования"></textarea>
+    <button onclick="hashSHA()">Хэшировать</button>
+    <div class="output" id="sha-output"></div>
+
+    <!-- One-Time Pad -->
+    <h2>One-Time Pad</h2>
+    <textarea id="otp-input" placeholder="Введите текст для шифрования"></textarea>
+    <input type="text" id="otp-key" placeholder="Введите ключ (должен совпадать по длине)" />
+    <button onclick="encryptOTP()">Зашифровать</button>
+    <div class="output" id="otp-output"></div>
+
+    <script>
+        // AES Encryption/Decryption
+        function encryptAES() {
+            const text = document.getElementById('aes-input').value;
+            const key = document.getElementById('aes-key').value;
+            if (key.length !== 16) {
+                alert('Ключ должен быть длиной 16 символов');
+                return;
+            }
+            const encrypted = CryptoJS.AES.encrypt(text, key).toString();
+            document.getElementById('aes-output').innerText = `Зашифровано: ${encrypted}`;
+        }
+
+        function decryptAES() {
+            const text = document.getElementById('aes-output').innerText.replace('Зашифровано: ', '');
+            const key = document.getElementById('aes-key').value;
+            if (key.length !== 16) {
+                alert('Ключ должен быть длиной 16 символов');
+                return;
+            }
+            const decrypted = CryptoJS.AES.decrypt(text, key).toString(CryptoJS.enc.Utf8);
+            document.getElementById('aes-output').innerText = `Расшифровано: ${decrypted}`;
+        }
+
+        // SHA-256 Hashing
+        function hashSHA() {
+            const text = document.getElementById('sha-input').value;
+            const hash = CryptoJS.SHA256(text).toString();
+            document.getElementById('sha-output').innerText = `Хэш: ${hash}`;
+        }
+
+        // One-Time Pad Encryption
+        function encryptOTP() {
+            const text = document.getElementById('otp-input').value;
+            const key = document.getElementById('otp-key').value;
+            if (text.length !== key.length) {
+                alert('Длина ключа должна совпадать с длиной текста');
+                return;
+            }
+            const encrypted = text.split('').map((char, i) => {
+                return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i));
+            }).join('');
+            document.getElementById('otp-output').innerText = `Зашифровано: ${btoa(encrypted)}`;
+        }
+    </script>
+</body>
+</html>
