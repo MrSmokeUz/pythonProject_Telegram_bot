@@ -1,0 +1,179 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}
+SHA 256
+{% endblock %}
+
+{% block links %}
+    <link rel="icon" href="static/images/logo.webp" type="image/webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/caesar.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="sectionOne">
+          <div class="block">
+            <img src="images/DALL·E 2024-11-29 20.13.34 - A clean and minimalist 2D logo design representing AES encryption. The logo features a shield with a lock icon in the center, surrounded by laurel lea.webp" alt="Увы, не работает" id="descpriptionImage">
+          </div>
+            <div class="block" id="descpription">
+              Шифр Цезаря — это один из самых простых и известных методов симметричного шифрования, использовавшийся ещё в Древнем Риме. Его принцип заключается в замене каждой буквы в тексте на букву, расположенную на определённое число позиций дальше в алфавите.
+            </div>
+            <div class="block">
+              <h1 class="">
+                    Плюсы
+              </h1>
+               <ol>
+                <li>Простота реализации</li>
+                <li>Легкость понимания</li>
+                <li></li>
+              </ol> 
+            </div>
+            <div class="block">
+              <h1>
+                Минусы
+              </h1>
+              <ul>
+                <li>Очень слабая защита </li>
+                <li>Уязвим для частотного анализа</li>
+                <li></li>
+              </ul>
+            </div>
+        </div>
+        <div class="sectionTwo">
+   <div class="container">
+        <!-- Выбор метода шифрования -->
+        <select id="encryption-method" onchange="changeMethod()">
+            <option value="caesar">Caesar Cipher</option>
+            <option value="rsa">RSA</option>
+            <option value="aes">AES</option>
+            <option value="blowfish">Blowfish</option>
+        </select>
+
+        <!-- Блок для ввода и вывода текста -->
+        <div class="translation-box">
+            <div>
+                <div class="description" id="input-description">Encrypting</div>
+                <textarea id="input-text" placeholder="Enter text here..."></textarea>
+            </div>
+
+            <div>
+                <div class="description" id="output-description">Decrypting</div>
+            <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
+
+            </div>
+               </div>
+
+        <!-- Панель управления -->
+        <div class="controls">
+            <!-- Поле для ввода ключа -->
+            <input type="number" id="key" placeholder="Enter shift key (e.g., 3)" />
+
+            <!-- Кнопки для действий -->
+            <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+            <button id="action-btn" onclick="performAction()">Encrypt</button>
+        </div>
+    </div>
+
+    <script>
+       let isEncrypting = true; // Флаг текущего действия (шифрование или дешифрование)
+ let currentMethod = 'caesar'; // Текущий метод шифрования
+
+        // Основная функция шифрования/дешифрования для Caesar Cipher
+        function caesarCipher(text, shift, action) {
+            const shiftValue = action === 'decrypt' ? -shift : shift;
+            return text.split('').map(char => {
+                if (/[a-zA-Z]/.test(char)) {
+                    const base = char.charCodeAt(0) >= 97 ? 97 : 65;
+                    return String.fromCharCode(
+                        ((char.charCodeAt(0) - base + shiftValue + 26) % 26) + base
+                    );
+                }
+                return char;
+            }).join('');
+        }
+
+        // Заглушки для других методов шифрования
+        function rsaEncryptDecrypt(text, action) {
+            return action === 'encrypt' ? `RSA Encrypted: ${text}` : `RSA Decrypted: ${text}`;
+        }
+
+        function aesEncryptDecrypt(text, action) {
+            return action === 'encrypt' ? `AES Encrypted: ${text}` : `AES Decrypted: ${text}`;
+        }
+
+        function blowfishEncryptDecrypt(text, action) {
+            return action === 'encrypt' ? `Blowfish Encrypted: ${text}` : `Blowfish Decrypted: ${text}`;
+        }
+
+        // Переключение между шифрованием и дешифрованием
+        function toggleAction() {
+            isEncrypting = !isEncrypting;
+            const actionText = isEncrypting ? 'Encrypt' : 'Decrypt';
+
+            document.getElementById('action-btn').innerText = actionText;
+            document.getElementById('toggle-action-btn').innerText = isEncrypting ? 'Switch to Decrypt' : 'Switch to Encrypt';
+
+            document.getElementById('input-description').innerText = isEncrypting ? 'Encrypting' : 'Decrypting';
+            document.getElementById('output-description').innerText = isEncrypting ? 'Decrypting' : 'Encrypting';
+
+            const inputField = document.getElementById('input-text');
+            const outputField = document.getElementById('output-text');
+
+            const temp = inputField.value;
+            inputField.value = outputField.value;
+            outputField.value = temp;
+        }
+
+        // Изменение метода шифрования
+        function changeMethod() {
+            currentMethod = document.getElementById('encryption-method').value;
+            const keyField = document.getElementById('key');
+
+            if (currentMethod === 'caesar') {
+                keyField.style.display = 'block';
+                keyField.placeholder = 'Enter shift key (e.g., 3)';
+            } else {
+                keyField.style.display = 'none';
+            }
+        }
+
+        // Выполнение текущего действия
+        function performAction() {
+            const text = document.getElementById('input-text').value;
+            const key = parseInt(document.getElementById('key').value, 10);
+
+            let result;
+
+            switch (currentMethod) {
+                case 'caesar':
+                    if (isNaN(key)) {
+                        alert('Please enter a valid numeric key.');
+                        return;
+                    }
+                    const action = isEncrypting ? 'encrypt' : 'decrypt';
+                    result = caesarCipher(text, key, action);
+                    break;
+                case 'rsa':
+                    result = rsaEncryptDecrypt(text, isEncrypting ? 'encrypt' : 'decrypt');
+                    break;
+                case 'aes':
+                    result = aesEncryptDecrypt(text, isEncrypting ? 'encrypt' : 'decrypt');
+                    break;
+                case 'blowfish':
+                    result = blowfishEncryptDecrypt(text, isEncrypting ? 'encrypt' : 'decrypt');
+                    break;
+                default:
+                    alert('Unsupported encryption method.');
+                    return;
+            }
+
+            document.getElementById('output-text').value = result;
+        }
+    </script>
+  
+{% endblock %}
