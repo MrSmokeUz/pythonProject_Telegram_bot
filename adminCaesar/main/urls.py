@@ -8,5 +8,6 @@ urlpatterns = [
     path('aes/', views.aes, name='main/aes'),
     path('rsa/', views.rsa, name='main/rsa'),
     path('blowfish/', views.caesar, name='main/blowfish'),
+    path('test/', views.test,name='main/test')
 
 ]

@@ -19,6 +19,9 @@ def aes(request):
 def blowfish(request):
     return render(request,'main/blowfish.html')
 
+def test(request):
+    return render(request,'main/test_2.html')
+
 
 
 
