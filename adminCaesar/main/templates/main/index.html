@@ -7,7 +7,7 @@ CAESAR
 {% endblock %}
 
 {% block links %}
-    <link rel="icon" href="static/images/logo.webp" type="image/webp">
+    <link rel="icon" href="{% static 'images/logo.webp' %}" type="image/webp">
     <link rel="stylesheet" href="static/css/style.css">
 
 {% endblock %}
@@ -30,7 +30,7 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src=" static/images/DALL·E 2024-11-29 20.13.34 - A clean and minimalist 2D logo design representing AES encryption. The logo features a shield with a lock icon in the center, surrounded by laurel lea.webp" alt="Картинка карточки">
+                <img src="{% static 'images/DALL·E 2024-11-29 20.13.34 - A clean and minimalist 2D logo design representing AES encryption. The logo features a shield with a lock icon in the center, surrounded by laurel lea.webp' %}" alt="Картинка карточки">
             </div>
             <div class="content">
                 <h3>Шифр AES</h3>
@@ -45,7 +45,7 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src="static/images//DALL·E 2024-11-29 20.20.40 - A clean and minimalist 2D logo design representing RSA encryption. The logo features a shield with a digital key icon in the center, surrounded by lau.webp" alt="Картинка карточки">
+                <img src="{% static 'images//DALL·E 2024-11-29 20.20.40 - A clean and minimalist 2D logo design representing RSA encryption. The logo features a shield with a digital key icon in the center, surrounded by lau.webp' %}" alt="Картинка карточки">
             </div>
             <div class="content">
                 <h3>Шифр RSA</h3>
