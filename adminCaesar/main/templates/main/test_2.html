@@ -3,159 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encryption Tool</title>
-    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <title>CAESARt</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            margin: 20px;
         }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-        }
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .actions div {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        textarea, select, input, button {
+        textarea {
             width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            height: 80px;
+            margin-bottom: 10px;
         }
         button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
+            margin-top: 10px;
+            padding: 10px 15px;
         }
-        button:hover {
-            background-color: #0056b3;
+        .output {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Encryption & Decryption Tool</h1>
+    <h1>Примеры шифрования</h1>
 
-        <div class="actions">
-            <div id="input-label">Input Text</div>
-            <div id="output-label">Output Text</div>
-        </div>
+    <!-- AES Encryption -->
+    <h2>AES (CryptoJS)</h2>
+    <textarea id="aes-input" placeholder="Введите текст для шифрования"></textarea>
+    <input type="text" id="aes-key" placeholder="Введите ключ (16 символов)" />
+    <button onclick="encryptAES()">Зашифровать</button>
+    <button onclick="decryptAES()">Расшифровать</button>
+    <div class="output" id="aes-output"></div>
 
-        <textarea id="input-text" placeholder="Enter text here..."></textarea>
-        <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
+    <!-- SHA Hashing -->
+    <h2>SHA-256 (CryptoJS)</h2>
+    <textarea id="sha-input" placeholder="Введите текст для хэширования"></textarea>
+    <button onclick="hashSHA()">Хэшировать</button>
+    <div class="output" id="sha-output"></div>
 
-        <select id="encryption-method">
-            <option value="caesar">Caesar Cipher</option>
-            <option value="aes">AES</option>
-            <option value="sha256">SHA-256</option>
-        </select>
-
-        <input type="text" id="key" placeholder="Enter key (if required)">
-
-        <button onclick="processText()">Encrypt</button>
-        <button onclick="toggleAction()">Switch to Decrypt</button>
-    </div>
+    <!-- One-Time Pad -->
+    <h2>One-Time Pad</h2>
+    <textarea id="otp-input" placeholder="Введите текст для шифрования"></textarea>
+    <input type="text" id="otp-key" placeholder="Введите ключ (должен совпадать по длине)" />
+    <button onclick="encryptOTP()">Зашифровать</button>
+    <div class="output" id="otp-output"></div>
 
     <script>
-        let isEncrypting = true;
-
-        function toggleAction() {
-            isEncrypting = !isEncrypting;
-            const actionButton = document.querySelector('button[onclick="processText()"]');
-            const inputLabel = document.getElementById('input-label');
-            const outputLabel = document.getElementById('output-label');
-
-            if (isEncrypting) {
-                actionButton.textContent = "Encrypt";
-                inputLabel.textContent = "Input Text";
-                outputLabel.textContent = "Output Text";
-            } else {
-                actionButton.textContent = "Decrypt";
-                inputLabel.textContent = "Ciphertext";
-                outputLabel.textContent = "Plaintext";
-            }
-        }
-
-        function processText() {
-            const method = document.getElementById('encryption-method').value;
-            const text = document.getElementById('input-text').value;
-            const key = document.getElementById('key').value;
-            let result = '';
-
-            if (!text.trim()) {
-                alert("Please enter text to process!");
+        // AES Encryption/Decryption
+        function encryptAES() {
+            const text = document.getElementById('aes-input').value;
+            const key = document.getElementById('aes-key').value;
+            if (key.length !== 16) {
+                alert('Ключ должен быть длиной 16 символов');
                 return;
             }
-
-            switch (method) {
-                case 'caesar':
-                    result = caesarCipher(text, parseInt(key), !isEncrypting);
-                    break;
-                case 'aes':
-                    result = isEncrypting ? aesEncrypt(text, key) : aesDecrypt(text, key);
-                    break;
-                case 'sha256':
-                    result = sha256Hash(text); // Only hashing
-                    break;
-                default:
-                    result = "Unsupported method!";
-            }
-
-            document.getElementById('output-text').value = result;
+            const encrypted = CryptoJS.AES.encrypt(text, key).toString();
+            document.getElementById('aes-output').innerText = `Зашифровано: ${encrypted}`;
         }
 
-        function caesarCipher(text, shift, decrypt = false) {
-            if (isNaN(shift)) {
-                return "Invalid key! Key must be a number.";
+        function decryptAES() {
+            const text = document.getElementById('aes-output').innerText.replace('Зашифровано: ', '');
+            const key = document.getElementById('aes-key').value;
+            if (key.length !== 16) {
+                alert('Ключ должен быть длиной 16 символов');
+                return;
             }
-            if (decrypt) shift = -shift;
-            return text.split('').map(char => {
-                if (char.match(/[a-z]/i)) {
-                    const code = char.charCodeAt(0);
-                    const base = char >= 'a' ? 97 : 65;
-                    return String.fromCharCode(((code - base + shift) % 26 + 26) % 26 + base);
-                }
-                return char;
+            const decrypted = CryptoJS.AES.decrypt(text, key).toString(CryptoJS.enc.Utf8);
+            document.getElementById('aes-output').innerText = `Расшифровано: ${decrypted}`;
+        }
+
+        // SHA-256 Hashing
+        function hashSHA() {
+            const text = document.getElementById('sha-input').value;
+            const hash = CryptoJS.SHA256(text).toString();
+            document.getElementById('sha-output').innerText = `Хэш: ${hash}`;
+        }
+
+        // One-Time Pad Encryption
+        function encryptOTP() {
+            const text = document.getElementById('otp-input').value;
+            const key = document.getElementById('otp-key').value;
+            if (text.length !== key.length) {
+                alert('Длина ключа должна совпадать с длиной текста');
+                return;
+            }
+            const encrypted = text.split('').map((char, i) => {
+                return String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i));
             }).join('');
-        }
-
-        function aesEncrypt(text, key) {
-            if (!key) return "Key is required for AES!";
-            return CryptoJS.AES.encrypt(text, key).toString();
-        }
-
-        function aesDecrypt(text, key) {
-            if (!key) return "Key is required for AES!";
-            try {
-                const bytes = CryptoJS.AES.decrypt(text, key);
-                return bytes.toString(CryptoJS.enc.Utf8) || "Invalid decryption key!";
-            } catch {
-                return "Decryption failed!";
-            }
-        }
-
-        function sha256Hash(text) {
-            return CryptoJS.SHA256(text).toString();
+            document.getElementById('otp-output').innerText = `Зашифровано: ${btoa(encrypted)}`;
         }
     </script>
 </body>
