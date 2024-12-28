@@ -5,158 +5,281 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encryption Tool</title>
     <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.0.0-beta.1/jsencrypt.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            background-color: #f3f4f6;
+            color: #333;
         }
         .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .translation-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 90%;
             max-width: 800px;
-            margin: 30px auto;
-            padding: 20px;
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 10px;
         }
-        h1 {
-            text-align: center;
+        .translation-box div {
+            margin: 20px;
         }
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .actions div {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        textarea, select, input, button {
-            width: 100%;
+        .translation-box textarea {
+            width: 300px;
+            height: 200px;
             margin: 10px 0;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        .translation-box .description {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        select, button, input {
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
         }
         button {
             background-color: #007bff;
             color: white;
             border: none;
-            cursor: pointer;
         }
         button:hover {
             background-color: #0056b3;
+        }
+        select {
+            margin: 0 10px;
+        }
+        textarea, .description {
+            transition: all 0.3s ease-in-out;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Encryption & Decryption Tool</h1>
-
-        <div class="actions">
-            <div id="input-label">Input Text</div>
-            <div id="output-label">Output Text</div>
-        </div>
-
-        <textarea id="input-text" placeholder="Enter text here..."></textarea>
-        <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
-
-        <select id="encryption-method">
+        <!-- Выбор метода шифрования -->
+        <select id="encryption-method" onchange="loadEncryptionPage()">
             <option value="caesar">Caesar Cipher</option>
             <option value="aes">AES</option>
+            <option value="rsa">RSA</option>
+            <option value="vigenere">Vigenere Cipher</option>
+            <option value="md5">MD5</option>
             <option value="sha256">SHA-256</option>
+            <option value="blowfish">Blowfish</option>
+            <option value="des">DES</option>
+            <option value="tripledes">Triple DES</option>
+            <option value="otp">One-Time Pad</option>
         </select>
 
-        <input type="text" id="key" placeholder="Enter key (if required)">
+        <!-- Динамическая область для шифрования -->
+        <div id="encryption-container">
+            <div class="translation-box">
+                <div>
+                    <div class="description" id="input-description">Encrypting</div>
+                    <textarea id="input-text" placeholder="Enter text here..."></textarea>
+                </div>
 
-        <button onclick="processText()">Encrypt</button>
-        <button onclick="toggleAction()">Switch to Decrypt</button>
+                <div>
+                    <div class="description" id="output-description">Decrypting</div>
+                    <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
+                </div>
+            </div>
+
+            <!-- Панель управления -->
+            <div class="controls">
+                <input type="text" id="key" placeholder="Enter key (if needed)">
+                <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+                <button id="action-btn" onclick="performAction()">Encrypt</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        let isEncrypting = true;
+        let currentAction = "encrypt";
 
         function toggleAction() {
-            isEncrypting = !isEncrypting;
-            const actionButton = document.querySelector('button[onclick="processText()"]');
-            const inputLabel = document.getElementById('input-label');
-            const outputLabel = document.getElementById('output-label');
-
-            if (isEncrypting) {
-                actionButton.textContent = "Encrypt";
-                inputLabel.textContent = "Input Text";
-                outputLabel.textContent = "Output Text";
-            } else {
-                actionButton.textContent = "Decrypt";
-                inputLabel.textContent = "Ciphertext";
-                outputLabel.textContent = "Plaintext";
-            }
+            currentAction = currentAction === "encrypt" ? "decrypt" : "encrypt";
+            document.getElementById("action-btn").textContent = currentAction.charAt(0).toUpperCase() + currentAction.slice(1);
+            document.getElementById("input-description").textContent = currentAction === "encrypt" ? "Encrypting" : "Decrypting";
+            document.getElementById("output-description").textContent = currentAction === "encrypt" ? "Decrypting" : "Encrypting";
         }
 
-        function processText() {
-            const method = document.getElementById('encryption-method').value;
-            const text = document.getElementById('input-text').value;
-            const key = document.getElementById('key').value;
-            let result = '';
+        function changeMethod() {
+            const method = document.getElementById("encryption-method").value;
+            document.getElementById("key").placeholder = getKeyPlaceholder(method);
+        }
 
-            if (!text.trim()) {
-                alert("Please enter text to process!");
-                return;
-            }
-
+        function getKeyPlaceholder(method) {
             switch (method) {
-                case 'caesar':
-                    result = caesarCipher(text, parseInt(key), !isEncrypting);
-                    break;
-                case 'aes':
-                    result = isEncrypting ? aesEncrypt(text, key) : aesDecrypt(text, key);
-                    break;
-                case 'sha256':
-                    result = sha256Hash(text); // Only hashing
-                    break;
+                case "caesar":
+                    return "Enter shift key (e.g., 3)";
+                case "aes":
+                case "blowfish":
+                case "des":
+                case "tripledes":
+                    return "Enter secret key";
+                case "vigenere":
+                    return "Enter keyword";
+                case "otp":
+                    return "Enter one-time pad key";
                 default:
-                    result = "Unsupported method!";
+                    return "Enter key (if needed)";
             }
-
-            document.getElementById('output-text').value = result;
         }
 
-        function caesarCipher(text, shift, decrypt = false) {
-            if (isNaN(shift)) {
-                return "Invalid key! Key must be a number.";
+        function performAction() {
+            const method = document.getElementById("encryption-method").value;
+            const text = document.getElementById("input-text").value;
+            const key = document.getElementById("key").value;
+
+            let result;
+            if (currentAction === "encrypt") {
+                result = encrypt(method, text, key);
+            } else {
+                result = decrypt(method, text, key);
             }
+
+            document.getElementById("output-text").value = result;
+        }
+
+        function encrypt(method, text, key) {
+            switch (method) {
+                case "caesar":
+                    return caesarCipher(text, parseInt(key));
+                case "aes":
+                    return CryptoJS.AES.encrypt(text, key).toString();
+                case "rsa":
+                    const rsaEncrypt = new JSEncrypt();
+                    rsaEncrypt.setPublicKey(key);
+                    return rsaEncrypt.encrypt(text);
+                case "vigenere":
+                    return vigenereCipher(text, key);
+                case "md5":
+                    return CryptoJS.MD5(text).toString();
+                case "sha256":
+                    return CryptoJS.SHA256(text).toString();
+                case "blowfish":
+                    return CryptoJS.Blowfish.encrypt(text, key).toString();
+                case "des":
+                    return CryptoJS.DES.encrypt(text, key).toString();
+                case "tripledes":
+                    return CryptoJS.TripleDES.encrypt(text, key).toString();
+                case "otp":
+                    return oneTimePadEncrypt(text, key);
+                default:
+                    return "Unsupported encryption method";
+            }
+        }
+
+        function decrypt(method, text, key) {
+            switch (method) {
+                case "caesar":
+                    return caesarCipher(text, parseInt(key), true);
+                case "aes":
+                    const aesBytes = CryptoJS.AES.decrypt(text, key);
+                    return aesBytes.toString(CryptoJS.enc.Utf8);
+                case "rsa":
+                    const rsaDecrypt = new JSEncrypt();
+                    rsaDecrypt.setPrivateKey(key);
+                    return rsaDecrypt.decrypt(text);
+                case "vigenere":
+                    return vigenereCipher(text, key, true);
+                case "blowfish":
+                    const blowfishBytes = CryptoJS.Blowfish.decrypt(text, key);
+                    return blowfishBytes.toString(CryptoJS.enc.Utf8);
+                case "des":
+                    const desBytes = CryptoJS.DES.decrypt(text, key);
+                    return desBytes.toString(CryptoJS.enc.Utf8);
+                case "tripledes":
+                    const tripleDesBytes = CryptoJS.TripleDES.decrypt(text, key);
+                    return tripleDesBytes.toString(CryptoJS.enc.Utf8);
+                case "otp":
+                    return oneTimePadDecrypt(text, key);
+                default:
+                    return "Unsupported decryption method";
+            }
+        }
+
+        function caesarCipher(str, shift, decrypt = false) {
             if (decrypt) shift = -shift;
-            return text.split('').map(char => {
-                if (char.match(/[a-z]/i)) {
-                    const code = char.charCodeAt(0);
-                    const base = char >= 'a' ? 97 : 65;
-                    return String.fromCharCode(((code - base + shift) % 26 + 26) % 26 + base);
-                }
-                return char;
-            }).join('');
+            return str.replace(/[a-z]/gi, (char) => {
+                const start = char >= 'a' ? 97 : 65;
+                return String.fromCharCode(((char.charCodeAt(0) - start + shift + 26) % 26) + start);
+            });
         }
 
-        function aesEncrypt(text, key) {
-            if (!key) return "Key is required for AES!";
-            return CryptoJS.AES.encrypt(text, key).toString();
+        function vigenereCipher(str, key, decrypt = false) {
+            const keyLength = key.length;
+            const keyCodes = key.toUpperCase().split('').map(c => c.charCodeAt(0) - 65);
+            return str.replace(/[a-z]/gi, (char, i) => {
+                const start = char >= 'a' ? 97 : 65;
+                const shift = keyCodes[i % keyLength] * (decrypt ? -1 : 1);
+                return String.fromCharCode(((char.charCodeAt(0) - start + shift + 26) % 26) + start);
+            });
         }
 
-        function aesDecrypt(text, key) {
-            if (!key) return "Key is required for AES!";
-            try {
-                const bytes = CryptoJS.AES.decrypt(text, key);
-                return bytes.toString(CryptoJS.enc.Utf8) || "Invalid decryption key!";
-            } catch {
-                return "Decryption failed!";
-            }
+        function oneTimePadEncrypt(text, key) {
+            if (key.length < text.length) return "Key must be at least as long as text";
+            return text.split('').map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i))).join('');
         }
 
-        function sha256Hash(text) {
-            return CryptoJS.SHA256(text).toString();
+        function oneTimePadDecrypt(text, key) {
+            return oneTimePadEncrypt(text, key); // XOR is symmetric
         }
+          function loadEncryptionPage() {
+            const method = document.getElementById("encryption-method").value;
+            const container = document.getElementById("encryption-container");
+
+            fetch(`${method}.html`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${method}.html`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    container.innerHTML = html;
+                })
+                .catch(error => {
+                    container.innerHTML = `<p>Error: ${error.message}</p>`;
+                });
+        }
+
+        // Загрузка страницы по умолчанию
+        window.onload = () => {
+            loadEncryptionPage();
+        };
     </script>
 </body>
 </html>

@@ -1,94 +1,156 @@
- let isEncrypting = true; // Флаг текущего действия (шифрование или дешифрование)
- let currentMethod = 'caesar'; // Текущий метод шифрования
 
-        // Основная функция шифрования/дешифрования для Caesar Cipher
-        function caesarCipher(text, shift, action) {
-            const shiftValue = action === 'decrypt' ? -shift : shift;
-            return text.split('').map(char => {
-                if (/[a-zA-Z]/.test(char)) {
-                    const base = char.charCodeAt(0) >= 97 ? 97 : 65;
-                    return String.fromCharCode(
-                        ((char.charCodeAt(0) - base + shiftValue + 26) % 26) + base
-                    );
-                }
-                return char;
-            }).join('');
+fetch(`templates/main/${method}.html`)
+
+   function toggleAction() {
+            currentAction = currentAction === "encrypt" ? "decrypt" : "encrypt";
+            document.getElementById("action-btn").textContent = currentAction.charAt(0).toUpperCase() + currentAction.slice(1);
+            document.getElementById("input-description").textContent = currentAction === "encrypt" ? "Encrypting" : "Decrypting";
+            document.getElementById("output-description").textContent = currentAction === "encrypt" ? "Decrypting" : "Encrypting";
         }
 
-        // Заглушки для других методов шифрования
-        function rsaEncryptDecrypt(text, action) {
-            return action === 'encrypt' ? `RSA Encrypted: ${text}` : `RSA Decrypted: ${text}`;
-        }
-
-        function aesEncryptDecrypt(text, action) {
-            return action === 'encrypt' ? `AES Encrypted: ${text}` : `AES Decrypted: ${text}`;
-        }
-
-        function blowfishEncryptDecrypt(text, action) {
-            return action === 'encrypt' ? `Blowfish Encrypted: ${text}` : `Blowfish Decrypted: ${text}`;
-        }
-
-        // Переключение между шифрованием и дешифрованием
-        function toggleAction() {
-            isEncrypting = !isEncrypting;
-            const actionText = isEncrypting ? 'Encrypt' : 'Decrypt';
-
-            document.getElementById('action-btn').innerText = actionText;
-            document.getElementById('toggle-action-btn').innerText = isEncrypting ? 'Switch to Decrypt' : 'Switch to Encrypt';
-
-            document.getElementById('input-description').innerText = isEncrypting ? 'Encrypting' : 'Decrypting';
-            document.getElementById('output-description').innerText = isEncrypting ? 'Decrypting' : 'Encrypting';
-
-            const inputField = document.getElementById('input-text');
-            const outputField = document.getElementById('output-text');
-
-            const temp = inputField.value;
-            inputField.value = outputField.value;
-            outputField.value = temp;
-        }
-
-        // Изменение метода шифрования
         function changeMethod() {
-            currentMethod = document.getElementById('encryption-method').value;
-            const keyField = document.getElementById('key');
+            const method = document.getElementById("encryption-method").value;
+            document.getElementById("key").placeholder = getKeyPlaceholder(method);
+        }
 
-            if (currentMethod === 'caesar') {
-                keyField.style.display = 'block';
-                keyField.placeholder = 'Enter shift key (e.g., 3)';
-            } else {
-                keyField.style.display = 'none';
+        function getKeyPlaceholder(method) {
+            switch (method) {
+                case "caesar":
+                    return "Enter shift key (e.g., 3)";
+                case "aes":
+                case "blowfish":
+                case "des":
+                case "tripledes":
+                    return "Enter secret key";
+                case "vigenere":
+                    return "Enter keyword";
+                case "otp":
+                    return "Enter one-time pad key";
+                default:
+                    return "Enter key (if needed)";
             }
         }
 
-        // Выполнение текущего действия
         function performAction() {
-            const text = document.getElementById('input-text').value;
-            const key = parseInt(document.getElementById('key').value, 10);
+            const method = document.getElementById("encryption-method").value;
+            const text = document.getElementById("input-text").value;
+            const key = document.getElementById("key").value;
 
             let result;
-
-            switch (currentMethod) {
-                case 'caesar':
-                    if (isNaN(key)) {
-                        alert('Please enter a valid numeric key.');
-                        return;
-                    }
-                    const action = isEncrypting ? 'encrypt' : 'decrypt';
-                    result = caesarCipher(text, key, action);
-                    break;
-                case 'rsa':
-                    result = rsaEncryptDecrypt(text, isEncrypting ? 'encrypt' : 'decrypt');
-                    break;
-                case 'aes':
-                    result = aesEncryptDecrypt(text, isEncrypting ? 'encrypt' : 'decrypt');
-                    break;
-                case 'blowfish':
-                    result = blowfishEncryptDecrypt(text, isEncrypting ? 'encrypt' : 'decrypt');
-                    break;
-                default:
-                    alert('Unsupported encryption method.');
-                    return;
+            if (currentAction === "encrypt") {
+                result = encrypt(method, text, key);
+            } else {
+                result = decrypt(method, text, key);
             }
 
-            document.getElementById('output-text').value = result;
+            document.getElementById("output-text").value = result;
         }
+
+        function encrypt(method, text, key) {
+            switch (method) {
+                case "caesar":
+                    return caesarCipher(text, parseInt(key));
+                case "aes":
+                    return CryptoJS.AES.encrypt(text, key).toString();
+                case "rsa":
+                    const rsaEncrypt = new JSEncrypt();
+                    rsaEncrypt.setPublicKey(key);
+                    return rsaEncrypt.encrypt(text);
+                case "vigenere":
+                    return vigenereCipher(text, key);
+                case "md5":
+                    return CryptoJS.MD5(text).toString();
+                case "sha256":
+                    return CryptoJS.SHA256(text).toString();
+                case "blowfish":
+                    return CryptoJS.Blowfish.encrypt(text, key).toString();
+                case "des":
+                    return CryptoJS.DES.encrypt(text, key).toString();
+                case "tripledes":
+                    return CryptoJS.TripleDES.encrypt(text, key).toString();
+                case "otp":
+                    return oneTimePadEncrypt(text, key);
+                default:
+                    return "Unsupported encryption method";
+            }
+        }
+
+        function decrypt(method, text, key) {
+            switch (method) {
+                case "caesar":
+                    return caesarCipher(text, parseInt(key), true);
+                case "aes":
+                    const aesBytes = CryptoJS.AES.decrypt(text, key);
+                    return aesBytes.toString(CryptoJS.enc.Utf8);
+                case "rsa":
+                    const rsaDecrypt = new JSEncrypt();
+                    rsaDecrypt.setPrivateKey(key);
+                    return rsaDecrypt.decrypt(text);
+                case "vigenere":
+                    return vigenereCipher(text, key, true);
+                case "blowfish":
+                    const blowfishBytes = CryptoJS.Blowfish.decrypt(text, key);
+                    return blowfishBytes.toString(CryptoJS.enc.Utf8);
+                case "des":
+                    const desBytes = CryptoJS.DES.decrypt(text, key);
+                    return desBytes.toString(CryptoJS.enc.Utf8);
+                case "tripledes":
+                    const tripleDesBytes = CryptoJS.TripleDES.decrypt(text, key);
+                    return tripleDesBytes.toString(CryptoJS.enc.Utf8);
+                case "otp":
+                    return oneTimePadDecrypt(text, key);
+                default:
+                    return "Unsupported decryption method";
+            }
+        }
+
+        function caesarCipher(str, shift, decrypt = false) {
+            if (decrypt) shift = -shift;
+            return str.replace(/[a-z]/gi, (char) => {
+                const start = char >= 'a' ? 97 : 65;
+                return String.fromCharCode(((char.charCodeAt(0) - start + shift + 26) % 26) + start);
+            });
+        }
+
+        function vigenereCipher(str, key, decrypt = false) {
+            const keyLength = key.length;
+            const keyCodes = key.toUpperCase().split('').map(c => c.charCodeAt(0) - 65);
+            return str.replace(/[a-z]/gi, (char, i) => {
+                const start = char >= 'a' ? 97 : 65;
+                const shift = keyCodes[i % keyLength] * (decrypt ? -1 : 1);
+                return String.fromCharCode(((char.charCodeAt(0) - start + shift + 26) % 26) + start);
+            });
+        }
+
+        function oneTimePadEncrypt(text, key) {
+            if (key.length < text.length) return "Key must be at least as long as text";
+            return text.split('').map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ key.charCodeAt(i))).join('');
+        }
+
+        function oneTimePadDecrypt(text, key) {
+            return oneTimePadEncrypt(text, key); // XOR is symmetric
+        }
+          function loadEncryptionPage() {
+            const method = document.getElementById("encryption-method").value;
+            const container = document.getElementById("encryption-container");
+
+            fetch(`${method}.html`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${method}.html`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    container.innerHTML = html;
+                })
+                .catch(error => {
+                    container.innerHTML = `<p>Error: ${error.message}</p>`;
+                });
+        }
+
+        // Загрузка страницы по умолчанию
+        window.onload = () => {
+            loadEncryptionPage();
+        };
+
