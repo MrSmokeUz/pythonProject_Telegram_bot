@@ -4,10 +4,10 @@ from . import views
 urlpatterns = [
     path('', views.index, name='main/index'),  # Главная страница
     # path('about/', views.about, name='about'),  # О сайте
-    path('caesar/', views.caesar, name='main/caesar'),
-    path('aes/', views.aes, name='main/aes'),
-    path('rsa/', views.rsa, name='main/rsa'),
-    path('blowfish/', views.caesar, name='main/blowfish'),
-    path('test/', views.test,name='main/test')
+    path('main/caesar.html', views.caesar, name='main/caesar'),
+    path('main/aes.html', views.aes, name='main/aes'),
+    path('main/rsa.html', views.rsa, name='main/rsa'),
+    path('main/blowfish.html', views.caesar, name='main/blowfish'),
+    path('main/test.html', views.test,name='main/test')
 
 ]

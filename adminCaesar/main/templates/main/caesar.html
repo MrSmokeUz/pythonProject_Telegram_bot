@@ -47,37 +47,42 @@ CAESAR
         <div class="sectionTwo">
    <div class="container">
         <!-- Выбор метода шифрования -->
-        <select id="encryption-method" onchange="changeMethod()">
+        <select id="encryption-method" onchange="loadEncryptionPage()">
             <option value="caesar">Caesar Cipher</option>
-            <option value="rsa">RSA</option>
             <option value="aes">AES</option>
+            <option value="rsa">RSA</option>
+            <option value="vigenere">Vigenere Cipher</option>
+            <option value="md5">MD5</option>
+            <option value="sha256">SHA-256</option>
             <option value="blowfish">Blowfish</option>
+            <option value="des">DES</option>
+            <option value="tripledes">Triple DES</option>
+            <option value="otp">One-Time Pad</option>
         </select>
 
-        <!-- Блок для ввода и вывода текста -->
-        <div class="translation-box">
-            <div>
-                <div class="description" id="input-description">Encrypting</div>
-                <textarea id="input-text" placeholder="Enter text here..."></textarea>
+        <!-- Динамическая область для шифрования -->
+        <div id="encryption-container">
+            <div class="translation-box">
+                <div>
+                    <div class="description" id="input-description">Encrypting</div>
+                    <textarea id="input-text" placeholder="Enter text here..."></textarea>
+                </div>
+
+                <div>
+                    <div class="description" id="output-description">Decrypting</div>
+                    <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
+                </div>
             </div>
 
-            <div>
-                <div class="description" id="output-description">Decrypting</div>
-            <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
-
+            <!-- Панель управления -->
+            <div class="controls">
+                <input type="text" id="key" placeholder="Enter key (if needed)">
+                <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+                <button id="action-btn" onclick="performAction()">Encrypt</button>
             </div>
-               </div>
-
-        <!-- Панель управления -->
-        <div class="controls">
-            <!-- Поле для ввода ключа -->
-            <input type="number" id="key" placeholder="Enter shift key (e.g., 3)" />
-
-            <!-- Кнопки для действий -->
-            <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
-            <button id="action-btn" onclick="performAction()">Encrypt</button>
         </div>
     </div>
+
 
     <script src="{% static 'js/caesar.js' %}">
     //    let isEncrypting = true; // Флаг текущего действия (шифрование или дешифрование)
