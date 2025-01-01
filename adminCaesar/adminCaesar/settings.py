@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
+import dj_database_url
+
 from pathlib import Path
 
 from dulwich.contrib.test_paramiko_vendor import PASSWORD
@@ -77,13 +80,18 @@ WSGI_APPLICATION = 'adminCaesar.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':BASE_DIR / 'db.sqlite3' ,
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3'),  # Локально SQLite, на Heroku PostgreSQL
+        conn_max_age=600,
+        ssl_require=True if 'DATABASE_URL' in os.environ else False
+    )
 }
 
+
+
+# Конфигурация базы данных
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -121,7 +129,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [BASE_DIR / 'main/static']
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "main/static"),
+]
+
+
 
 TEMPLATES = [
     {
@@ -138,9 +150,6 @@ TEMPLATES = [
         },
     },
 ]
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
 # Default primary key field type
