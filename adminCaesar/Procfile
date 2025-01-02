@@ -1,1 +1,1 @@
-web: gunicorn adminCaesar.wsgi:application
+web: gunicorn pythonProject_Telegram_bot.adminCaesar.wsgi --log-file -
