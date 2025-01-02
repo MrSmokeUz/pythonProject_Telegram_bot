@@ -63,8 +63,6 @@ requests==2.32.3
 requests-file==2.0.0
 requests-ftp==0.3.1
 rpm==4.20.0
-selinux @ file:///builddir/build/BUILD/libselinux-3.7-build/libselinux-3.7/src
-sepolicy @ file:///builddir/build/BUILD/policycoreutils-3.7-build/selinux-3.7/python/sepolicy
 setools==4.5.1
 setuptools==69.2.0
 simpleaudio==1.0.4
