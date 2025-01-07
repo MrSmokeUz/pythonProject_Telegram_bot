@@ -1,3 +1,4 @@
+
 """
 Django settings for adminCaesar project.
 
@@ -15,7 +16,7 @@ import dj_database_url
 
 from pathlib import Path
 
-from dulwich.contrib.test_paramiko_vendor import PASSWORD
+# from dulwich.contrib.test_paramiko_vendor import PASSWORD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
