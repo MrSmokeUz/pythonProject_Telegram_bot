@@ -87,7 +87,7 @@ header {
   position: relative;
   margin: 15px;
   width: 400px;
-  height: 525px;
+  height: 600px;
   background: #F9F0DA;
   border-bottom: 1px solid #be290e;
   transition: border-bottom 0.1s;
@@ -144,4 +144,7 @@ header {
 .button:active {
   background-color: #be290e;
   color: #fff;
+}
+.container{
+    display:none;
 }

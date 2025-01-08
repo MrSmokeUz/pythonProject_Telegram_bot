@@ -15,20 +15,62 @@
 </head>
 <body>
    <header>
-        <div class="profile">
-            <img src="static/images/free-icon-home-553416.png" alt="Увы, не работает" class="profile">
-        </div>
-        <form class="searchBar">
-            <input type="text" placeholder="Искать здесь..." class="searchBarInput">
+       {% block home %}
+       {% endblock %}
+
+        <form class="searchBar" >
+            <input type="text" placeholder="Искать здесь..." class="searchBarInput" id="search-input" onkeyup="filterCards()" >
             <button type="submit" class="searchBarInputButton"></button>
         </form>
-        <div class="profile">
-            <img src="static/images/free-icon-profile-5987424.png" alt="Увы, не работает" class="profile">
-        </div>
+
     </header>
     {% block content %}
     {% endblock %}
 
-<script src="script.js"></script>
+   {% block encrypt %}
+     <div class="container">
+        <!-- Выбор метода шифрования -->
+        <select id="encryption-method" onchange="loadEncryptionPage()">
+            <option value="sha256">SHA-256</option>
+            <option value="caesar">Caesar Cipher</option>
+            <option value="aes">AES</option>
+            <option value="rsa">RSA</option>
+            <option value="vigenere">Vigenere Cipher</option>
+            <option value="md5">MD5</option>
+            <option value="blowfish">Blowfish</option>
+            <option value="des">DES</option>
+            <option value="tripledes">Triple DES</option>
+            <option value="otp">One-Time Pad</option>
+        </select>
+
+        <!-- Динамическая область для шифрования -->
+        <div id="encryption-container">
+            <div class="translation-box">
+                <div>
+                    <div class="description" id="input-description">Encrypting</div>
+                    <textarea id="input-text" placeholder="Enter text here..."></textarea>
+                </div>
+
+                <div>
+                    <div class="description" id="output-description">Decrypting</div>
+                    <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
+                </div>
+            </div>
+
+            <!-- Панель управления -->
+            <div class="controls">
+                <input type="text" id="key" placeholder="Enter key (if needed)">
+                <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+                <button id="action-btn" onclick="performAction()">Encrypt</button>
+            </div>
+        </div>
+    </div>
+
+
+   {% endblock %}
+<script src="static/js/script.js"></script>
+
+    <script src="static/js/caesar.js'">
+    </script>
 </body>
 </html>

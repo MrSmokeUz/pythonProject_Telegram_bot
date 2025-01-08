@@ -13,24 +13,27 @@ RSA
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/caesar.css' %}">
 {% endblock %}
-
+{% block home %}
+  <div class="profile">
+            <img src="{% static '/images/free-icon-home-553416.png'%}" alt="Увы, не работает" class="profile">
+  </div>
+{% endblock %}
 {% block content %}
     <div class="main">
         <div class="sectionOne">
           <div class="block">
-            <img src="images/DALL·E 2024-11-29 20.13.34 - A clean and minimalist 2D logo design representing AES encryption. The logo features a shield with a lock icon in the center, surrounded by laurel lea.webp" alt="Увы, не работает" id="descpriptionImage">
+            <img src="{% static 'images/DALL·E 2024-11-29 20.20.40 - A clean and minimalist 2D logo design representing RSA encryption. The logo features a shield with a digital key icon in the center, surrounded by lau.webp' %}" alt="Увы, не работает" id="descpriptionImage">
           </div>
             <div class="block" id="descpription">
-              Шифр Цезаря — это один из самых простых и известных методов симметричного шифрования, использовавшийся ещё в Древнем Риме. Его принцип заключается в замене каждой буквы в тексте на букву, расположенную на определённое число позиций дальше в алфавите.
+                Асимметричный алгоритм шифрования, использующий пару ключей (открытый и закрытый). Основан на сложности факторизации больших чисел.
             </div>
             <div class="block">
               <h1 class="">
                     Плюсы
               </h1>
                <ol>
-                <li>Простота реализации</li>
-                <li>Легкость понимания</li>
-                <li></li>
+                <li>Не требует передачи секретного ключа</li>
+                <li>Используется для цифровых подписей и безопасного обмена ключами</li>
               </ol> 
             </div>
             <div class="block">
@@ -38,46 +41,16 @@ RSA
                 Минусы
               </h1>
               <ul>
-                <li>Очень слабая защита </li>
-                <li>Уязвим для частотного анализа</li>
-                <li></li>
+                <li>Медленнее симметричных алгоритмов</li>
+                <li>Требует больших вычислительных ресурсов</li>
+
               </ul>
             </div>
         </div>
         <div class="sectionTwo">
-   <div class="container">
-        <!-- Выбор метода шифрования -->
-        <select id="encryption-method" onchange="changeMethod()">
-            <option value="rsa">RSA</option>
-            <option value="caesar">Caesar Cipher</option>            
-            <option value="aes">AES</option>
-            <option value="blowfish">Blowfish</option>
-        </select>
-
-        <!-- Блок для ввода и вывода текста -->
-        <div class="translation-box">
-            <div>
-                <div class="description" id="input-description">Encrypting</div>
-                <textarea id="input-text" placeholder="Enter text here..."></textarea>
-            </div>
-
-            <div>
-                <div class="description" id="output-description">Decrypting</div>
-            <textarea id="output-text" placeholder="Result will appear here..." readonly></textarea>
-
-            </div>
-               </div>
-
-        <!-- Панель управления -->
-        <div class="controls">
-            <!-- Поле для ввода ключа -->
-            <input type="number" id="key" placeholder="Enter shift key (e.g., 3)" />
-
-            <!-- Кнопки для действий -->
-            <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
-            <button id="action-btn" onclick="performAction()">Encrypt</button>
         </div>
-    </div>
+<script src="{% static 'js/caesar.js' %}">
 
+</script>
 
 {% endblock %}

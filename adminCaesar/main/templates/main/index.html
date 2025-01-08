@@ -12,7 +12,16 @@ CAESAR
 
 {% endblock %}
 
+{% block home %}
+  <div class="profile">
+            <img src="static/images/free-icon-home-553416.png" alt="Увы, не работает" class="profile">
+  </div>
+{% endblock %}
+
+
+
      {% block content %}
+
      <div class="main">
         <div class="card">
             <div class="imageCard">
@@ -20,7 +29,7 @@ CAESAR
             </div>
             <div class="content">
                 <h3>Шифр Цезаря</h3>
-                <p>Описание шифра Цезаря.</p>
+                <p>Заменяет каждую букву в тексте на другую, смещённую на фиксированное число позиций в алфавите.</p>
                 <form action="{% url 'main/caesar' %}">
                     <button class="button" type="submit">
                         Полное описание
@@ -34,7 +43,7 @@ CAESAR
             </div>
             <div class="content">
                 <h3>Шифр AES</h3>
-                <p>Описание шифра AES.</p>
+                <p>Симметричный блочный шифр с длиной ключа 128, 192 или 256 бит.</p>
                 <form action="{% url 'main/aes' %}">
                 <button class="button" type="submit">
                     Полное описание
@@ -49,7 +58,7 @@ CAESAR
             </div>
             <div class="content">
                 <h3>Шифр RSA</h3>
-                <p>Описание шифра RSA.</p>
+                <p>Асимметричный алгоритм, использующий простые числа для генерации </p>
                 <form action="{% url 'main/rsa' %}">
                      <button class="button" type="submit">
                     Полное описание
@@ -63,7 +72,7 @@ CAESAR
             </div>
             <div class="content">
                 <h3>Шифр BLOWFISH</h3>
-                <p>Описание шифра BLOWFISH</p>
+                <p>Симметричный блочный шифр с переменной длиной ключа.</p>
                 <form action="{% url 'main/blowfish' %}">
                 <button class="button" type="submit">
                     Полное описание
@@ -74,12 +83,12 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src="static/images/DALL·E 2024-11-29 20.24.45 - A clean and minimalist 2D logo design representing Blowfish encryption. The logo features a shield with a stylized fish icon in the center, surrounded.webp" alt="Картинка карточки">
+                <img src="static/images/viginere.webp" alt="Картинка карточки">
             </div>
             <div class="content">
-                <h3>Шифр BLOWFISH</h3>
-                <p>Описание шифра BLOWFISH</p>
-                <form action="{% url 'main/blowfish' %}">
+                <h3>Шифр VIGINERE</h3>
+                <p> Расширение шифра Цезаря, использующее ключевое слово для изменения смещения каждой буквы.</p>
+                <form action="{% url 'main/viginere' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -89,12 +98,12 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src="static/images/DALL·E 2024-11-29 20.24.45 - A clean and minimalist 2D logo design representing Blowfish encryption. The logo features a shield with a stylized fish icon in the center, surrounded.webp" alt="Картинка карточки">
+                <img src="static/images/md5.webp" alt="Картинка карточки">
             </div>
             <div class="content">
-                <h3>Шифр BLOWFISH</h3>
-                <p>Описание шифра BLOWFISH</p>
-                <form action="{% url 'main/blowfish' %}">
+                <h3>Шифр MD5</h3>
+                <p>MD5 — хэш-функция, преобразующая данные в 128-битный хэш</p>
+                <form action="{% url 'main/md5' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -104,12 +113,12 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src="static/images/DALL·E 2024-11-29 20.24.45 - A clean and minimalist 2D logo design representing Blowfish encryption. The logo features a shield with a stylized fish icon in the center, surrounded.webp" alt="Картинка карточки">
+                <img src="static/images/sha.webp" alt="Картинка карточки">
             </div>
             <div class="content">
-                <h3>Шифр BLOWFISH</h3>
-                <p>Описание шифра BLOWFISH</p>
-                <form action="{% url 'main/blowfish' %}">
+                <h3>Шифр SHA-256</h3>
+                <p>Криптографическая хэш-функция для проверки целостности данных.</p>
+                <form action="{% url 'main/sha' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -119,12 +128,12 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src="static/images/DALL·E 2024-11-29 20.24.45 - A clean and minimalist 2D logo design representing Blowfish encryption. The logo features a shield with a stylized fish icon in the center, surrounded.webp" alt="Картинка карточки">
+                <img src="static/images/des.webp" alt="Картинка карточки">
             </div>
             <div class="content">
-                <h3>Шифр BLOWFISH</h3>
-                <p>Описание шифра BLOWFISH</p>
-                <form action="{% url 'main/blowfish' %}">
+                <h3>Шифр DES</h3>
+                <p>Старый стандарт симметричного шифрования с 56-битным ключом.</p>
+                <form action="{% url 'main/des' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -134,12 +143,12 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src="static/images/DALL·E 2024-11-29 20.24.45 - A clean and minimalist 2D logo design representing Blowfish encryption. The logo features a shield with a stylized fish icon in the center, surrounded.webp" alt="Картинка карточки">
+                <img src="static/images/trides.webp" alt="Картинка карточки">
             </div>
             <div class="content">
-                <h3>Шифр BLOWFISH</h3>
-                <p>Описание шифра BLOWFISH</p>
-                <form action="{% url 'main/blowfish' %}">
+                <h3>Шифр TRIPLE-DES</h3>
+                <p> Расширение DES с тройным шифрованием.</p>
+                <form action="{% url 'main/trides' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -149,12 +158,12 @@ CAESAR
         </div>
         <div class="card">
             <div class="imageCard">
-                <img src="static/images/DALL·E 2024-11-29 20.24.45 - A clean and minimalist 2D logo design representing Blowfish encryption. The logo features a shield with a stylized fish icon in the center, surrounded.webp" alt="Картинка карточки">
+                <img src="static/images/otp.webp" alt="Картинка карточки">
             </div>
             <div class="content">
-                <h3>Шифр BLOWFISH</h3>
-                <p>Описание шифра BLOWFISH</p>
-                <form action="{% url 'main/blowfish' %}">
+                <h3>Шифр ONE TIME PAD</h3>
+                <p>Идеальный шифр, использующий случайный одноразовый ключ.</p>
+                <form action="{% url 'main/otp' %}">
                 <button class="button" type="submit">
                     Полное описание
                 </button>
@@ -162,5 +171,6 @@ CAESAR
                
             </div>
         </div>
+
  {% endblock %}
 

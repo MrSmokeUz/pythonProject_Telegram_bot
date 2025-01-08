@@ -14,23 +14,28 @@ AES
     <link rel="stylesheet" href="{% static 'css/caesar.css' %}">
 {% endblock %}
 
+{% block home %}
+  <div class="profile">
+            <img src="{% static '/images/free-icon-home-553416.png'%}" alt="Увы, не работает" class="profile">
+  </div>
+{% endblock %}
 {% block content %}
     <div class="main">
         <div class="sectionOne">
           <div class="block">
-            <img src="images/DALL·E 2024-11-29 20.13.34 - A clean and minimalist 2D logo design representing AES encryption. The logo features a shield with a lock icon in the center, surrounded by laurel lea.webp" alt="Увы, не работает" id="descpriptionImage">
+            <img src="{% static 'images/DALL·E 2024-11-29 20.13.34 - A clean and minimalist 2D logo design representing AES encryption. The logo features a shield with a lock icon in the center, surrounded by laurel lea.webp' %}" alt="Увы, не работает" id="descpriptionImage">
           </div>
             <div class="block" id="descpription">
-              Шифр Цезаря — это один из самых простых и известных методов симметричного шифрования, использовавшийся ещё в Древнем Риме. Его принцип заключается в замене каждой буквы в тексте на букву, расположенную на определённое число позиций дальше в алфавите.
+                Симметричный блочный алгоритм шифрования с длиной ключа 128, 192 или 256 бит.
             </div>
             <div class="block">
               <h1 class="">
                     Плюсы
               </h1>
                <ol>
-                <li>Простота реализации</li>
-                <li>Легкость понимания</li>
-                <li></li>
+                <li>Высокая скорость и стойкость</li>
+                <li>Широко используется и стандарт для многих систем</li>
+
               </ol> 
             </div>
             <div class="block">
@@ -38,17 +43,16 @@ AES
                 Минусы
               </h1>
               <ul>
-                <li>Очень слабая защита </li>
-                <li>Уязвим для частотного анализа</li>
-                <li></li>
+                <li>Сложнее реализовать, чем более простые алгоритмы </li>
+
               </ul>
             </div>
         </div>
         <div class="sectionTwo">
-     <div class="container">
+    <div class="container">
         <!-- Выбор метода шифрования -->
         <select id="encryption-method" onchange="loadEncryptionPage()">
-            <option value="aes">AES</option>
+             <option value="aes">AES</option>
             <option value="caesar">Caesar Cipher</option>
             <option value="rsa">RSA</option>
             <option value="vigenere">Vigenere Cipher</option>
@@ -84,7 +88,7 @@ AES
     </div>
 
 
- <script src="{% static 'js/caesar.js' %}">
+    <script src="{% static 'js/caesar.js' %}">
+    </script>
 
- </script>
 {% endblock %}

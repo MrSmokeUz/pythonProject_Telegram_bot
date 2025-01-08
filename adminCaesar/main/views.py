@@ -22,9 +22,29 @@ def blowfish(request):
 def test(request):
     return render(request,'main/test_2.html')
 
+def test(request):
+    return render(request,'main/test_2.html')
+
+def vigenere(request):
+    return render(request,'main/vigenere.html')
 
 
+def sha(request):
+    return render(request,'main/sha256.html')
 
 
+def des(request):
+    return render(request,'main/des.html')
+
+
+def trides(request):
+    return render(request,'main/3des.html')
+
+def mdfive(request):
+    return render(request,'main/md5.html')
+
+
+def otp(request):
+    return render(request,'main/otp.html')
 # def about(request):
 #     return render(request, 'caesar.html')

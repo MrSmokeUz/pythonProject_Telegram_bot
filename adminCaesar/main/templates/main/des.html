@@ -1,0 +1,61 @@
+{% extends 'main/layout.html' %}
+
+{% load static %}
+
+{% block title %}
+DES
+{% endblock %}
+
+{% block links %}
+    <link rel="icon" href="{% static 'images/logo.webp' %}" type="image/webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/caesar.css' %}">
+{% endblock %}
+
+
+{% block home %}
+  <div class="profile">
+            <img src="{% static '/images/free-icon-home-553416.png'%}" alt="Увы, не работает" class="profile">
+  </div>
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="sectionOne">
+          <div class="block">
+            <img src="{% static 'images/DALL·E 2024-11-29 20.13.34 - A clean and minimalist 2D logo design representing AES encryption. The logo features a shield with a lock icon in the center, surrounded by laurel lea.webp' %}" alt="Увы, не работает" id="descpriptionImage">
+          </div>
+            <div class="block" id="descpription">
+                Симметричный блочный алгоритм с длиной ключа 56 бит. Шифрует блоки данных длиной 64 бита.
+            </div>
+            <div class="block">
+              <h1 class="">
+                    Плюсы
+              </h1>
+               <ol>
+                <li>Простота реализации</li>
+                <li>Был стандартом шифрования несколько десятилетий</li>
+                <li></li>
+              </ol>
+            </div>
+            <div class="block">
+              <h1>
+                Минусы
+              </h1>
+              <ol>
+                <li>Низкая стойкость из-за короткого ключа</li>
+                <li>Устарел и заменен более безопасными алгоритмами.</li>
+                <li></li>
+              </ol>
+            </div>
+        </div>
+        <div class="sectionTwo">
+        </div>
+
+    <script src="{% static 'js/caesar.js' %}">
+
+    </script>
+
+{% endblock %}

@@ -150,21 +150,23 @@ header {
             /* flex-direction: column; */
             justify-content: center;
             align-items: center;
-            width: 90%;
-            max-width: .sectionTwo;
+            width: 1000px;
+            max-width: 1500px;
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-top: 10px;
         }
-        .translation-box div{
-            margin: 50px;
-        }
+
         .translation-box textarea {
             width: 400px;
             height: 400px;
-            margin: 10px 0;
+            min-width:200px;
+            max-width:500px;
+            min-height:200px;
+            max-height:500px;
+            margin: 10px ;
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;

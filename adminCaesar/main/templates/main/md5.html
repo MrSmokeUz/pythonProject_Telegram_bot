@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/layout.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block title %}
+MD5
+{% endblock %}
+
+{% block home %}
+  <div class="profile">
+      <img src="{% static '/images/free-icon-home-553416.png'%}" alt="Увы, не работает" class="profile">
+  </div>
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="sectionOne">
+          <div class="block">
+            <img src="{% static 'images/md5.webp' %}" alt="Увы, не работает" id="descpriptionImage">
+          </div>
+            <div class="block" id="descpription">
+                MD5 (Message Digest Algorithm 5) — это криптографическая хэш-функция, разработанная Рональдом Ривестом в 1991 году. Она принимает входные данные произвольного размера и преобразует их в фиксированный 128-битный хэш (32 символа в шестнадцатеричном формате). MD5 широко использовалась для проверки целостности данных и хранения паролей.
+            </div>
+            <div class="block">
+              <h1 class="">
+                    Плюсы
+              </h1>
+               <ol>
+                <li>Простота и скорость</li>
+                <li>Компактный результат</li>
+                <li>Широкая поддержка</li>
+              </ol> 
+            </div>
+            <div class="block">
+              <h1>
+                Минусы
+              </h1>
+              <ol>
+                <li>Криптографическая уязвимость</li>
+                <li>Уязвимость к атаке перебором</li>
+                <li>Отсутствие защиты от атак радужных таблиц</li>
+              </ol>
+            </div>
+        </div>
+        <div class="sectionTwo">
+        </div>
+    <script src="{% static 'js/caesar.js' %}">
+    </script>
+
+  
+{% endblock %}
