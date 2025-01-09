@@ -1,3 +1,4 @@
+//   Функция поиска
    function filterCards() {
         const input = document.getElementById("search-input").value.toLowerCase();
         const cards = document.querySelectorAll(".card");

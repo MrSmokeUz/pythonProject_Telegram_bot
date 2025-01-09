@@ -1,6 +1,8 @@
+<!--Основаня структура сайта ялвяется шаблоном для остальных страниц-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--    Разлинчые подключенные библиотеки-->
     <meta charset="UTF-8">
     <title>  {% block title %}
     {% endblock %}</title>
@@ -14,20 +16,31 @@
 
 </head>
 <body>
+<!--Nav bar панель проекта применяется на всех страницах-->
    <header>
+<!--     Этот блок предназначе для размещение иконки -->
        {% block home %}
        {% endblock %}
-
+<!--Строка поиска-->
         <form class="searchBar" >
             <input type="text" placeholder="Искать здесь..." class="searchBarInput" id="search-input" onkeyup="filterCards()" >
             <button type="submit" class="searchBarInputButton"></button>
         </form>
+<!--       Ссылка на телеграм-->
+         <div class="block" id="block">
+             {% block tele %}
+             {% endblock %}
 
+
+
+          </div>
     </header>
     {% block content %}
     {% endblock %}
 
-   {% block encrypt %}
+       <div class="sectionTwo">
+
+<!-- Данный блок применяется для шифрований и дешифрований для страниц карточек-->
      <div class="container">
         <!-- Выбор метода шифрования -->
         <select id="encryption-method" onchange="loadEncryptionPage()">
@@ -60,14 +73,14 @@
             <!-- Панель управления -->
             <div class="controls">
                 <input type="text" id="key" placeholder="Enter key (if needed)">
-                <button id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
-                <button id="action-btn" onclick="performAction()">Encrypt</button>
+                <button class="button-change" id="toggle-action-btn" onclick="toggleAction()">Switch to Decrypt</button>
+                <button class="button-change" id="action-btn" onclick="performAction()">Encrypt</button>
             </div>
         </div>
     </div>
+</div>
 
-
-   {% endblock %}
+<!--Подключенные скрипты-->
 <script src="static/js/script.js"></script>
 
     <script src="static/js/caesar.js'">
